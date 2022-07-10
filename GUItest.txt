@@ -1,0 +1,57 @@
+import javax.swing.*;
+import java.awt.*;
+
+// import java.util.*;
+
+public class GUI{
+    public GUI() {
+        JFrame frame = new JFrame();
+        frame.setPreferredSize(new Dimension(800, 600));
+
+        JButton b1 = new JButton("Solve");
+        JButton b2 = new JButton("Clear grid");
+        JButton b3 = new JButton(" Exit");
+
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setLayout(new GridLayout(1,3));
+        buttonPanel.add(b1);buttonPanel.add(b2);buttonPanel.add(b3);
+
+
+        JPanel[] sudokuPanels = new JPanel[9];
+        for(int i=0; i<9; i++){
+            sudokuPanels[i] = new JPanel();
+            sudokuPanels[i].setLayout(new GridLayout(3, 3,0,0));
+        }
+
+
+
+        JTextField[][] fields = new JTextField[9][9];
+        for (int i=0 ; i<9 ; i++) {
+            for(int j=0; j<9; j++){
+                fields[i][j] = new JTextField();
+                sudokuPanels[i].add(fields[i][j]);
+            }
+        }
+
+    
+        buttonPanel.setBorder(BorderFactory.createEmptyBorder(30, 30, 10, 30));
+
+        JPanel gridPanel = new JPanel();
+        gridPanel.setLayout(new GridLayout(3,3,10,10));
+        gridPanel.add(sudokuPanels[0]);gridPanel.add(sudokuPanels[1]);gridPanel.add(sudokuPanels[2]);
+        gridPanel.add(sudokuPanels[3]);gridPanel.add(sudokuPanels[4]);gridPanel.add(sudokuPanels[5]);
+        gridPanel.add(sudokuPanels[6]);gridPanel.add(sudokuPanels[7]);gridPanel.add(sudokuPanels[8]);
+
+        gridPanel.setBorder(BorderFactory.createEmptyBorder(30, 30, 10, 30));
+        
+        frame.add(gridPanel, BorderLayout.CENTER);
+        frame.add(buttonPanel, BorderLayout.CENTER);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setTitle("Sudoku Solver");
+        frame.pack();
+        frame.setVisible(true);
+    
+    }
+}
+
+
