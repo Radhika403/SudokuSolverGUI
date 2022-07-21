@@ -1,4 +1,3 @@
-
 public class Solver {
 
     public static boolean checkRow(SudokuClass test, int i, int j){
@@ -86,7 +85,7 @@ public class Solver {
         if (cell >= 1 && cell <= 9) return false;
         return true;
     }
-
+    
     public static void solve(SudokuClass test, int i, int j) {
         if (i == 8 && j == 9) {
             test.show();
@@ -110,34 +109,93 @@ public class Solver {
             solve(test, i, j+1);
         }
     }
+
+    public static void updateResult(int[][] result, int[][] solution) {
+    	for (int i=0; i<9; i++) {
+    		for (int j=0; j<9; j++) {
+    			solution[i][j] = result[i][j];
+    		}
+    	}
+    }
+    
+    public static void solveTemp(SudokuClass test, int i, int j, int[][] solution) {
+    	int[][] board = new int[9][9];
+    	
+    	solveAndGetFirstSolution(test, i, j, board);
+    	for (int k=0; k<9; k++) {
+    		for (int l=0; l<9; l++) {
+    			solution[k][l] = board[k][l];
+    		}
+    	}
+    }
+    
+    public static boolean solveAndGetFirstSolution(SudokuClass test, int i, int j, int[][] solution) { 	
+    	if (i == 8 && j == 9) {
+            updateResult(test.sudoku, solution);
+            return true;
+        }
+
+        if(j >= 9 && i < 8){
+        	if (solveAndGetFirstSolution(test, i+1,  0, solution)) {
+        		return true;
+        	}
+            return false;
+        }
+
+        if(isEmpty(test.sudoku[i][j])){
+            for(int val = 1; val <= 9; val++){
+                test.sudoku[i][j] = val;
+                if (checkRow(test, i, j) && checkColumn(test, i, j) && checkBox(test, i, j)) {
+                    if (solveAndGetFirstSolution(test, i, j+1, solution)) {
+                    	return true;
+                    }
+                }
+                test.sudoku[i][j] = 0;
+            }
+        } else {
+        	if (solveAndGetFirstSolution(test, i, j+1, solution)) {
+        		return true;
+        	}
+        }
+        
+        return false;
+    }
     
     
     public static void main(String[] args) {
         new GUI();
 
-        // int[][] board = {
-        //     { 8, 0, 0, 0, 0, 0, 0, 0, 0 },
-        //     { 0, 0, 3, 6, 0, 0, 0, 0, 0 },
-        //     { 0, 7, 0, 0, 9, 0, 2, 0, 0 },
-        //     { 0, 5, 0, 0, 0, 7, 0, 0, 0 },
-        //     { 0, 0, 0, 0, 4, 5, 7, 0, 0 },
-        //     { 0, 0, 0, 1, 0, 0, 0, 3, 0 },
-        //     { 0, 0, 1, 0, 0, 0, 0, 6, 8 },
-        //     { 0, 0, 8, 5, 0, 0, 0, 1, 0 },
-        //     { 0, 9, 0, 0, 0, 0, 4, 0, 0 } 
-        //   };
+         int[][] board = {
+             { 8, 0, 0, 0, 0, 0, 0, 0, 0 },
+             { 0, 0, 3, 6, 0, 0, 0, 0, 0 },
+             { 0, 7, 0, 0, 9, 0, 2, 0, 0 },
+             { 0, 5, 0, 0, 0, 7, 0, 0, 0 },
+             { 0, 0, 0, 0, 4, 5, 7, 0, 0 },
+             { 0, 0, 0, 1, 0, 0, 0, 3, 0 },
+             { 0, 0, 1, 0, 0, 0, 0, 6, 8 },
+             { 0, 0, 8, 5, 0, 0, 0, 1, 0 },
+             { 0, 9, 0, 0, 0, 0, 4, 0, 0 } 
+           };
 
-        // SudokuClass test = new SudokuClass(board);
-        // System.out.println("Original Sudoku");
-        // test.show();
-        // System.out.println();
+         SudokuClass test = new SudokuClass(board);
+         System.out.println("Original Sudoku");
+         test.show();
+         System.out.println();
 
-        // if (!isValid(test)){
-        //     System.out.println("Entered puzzle is invalid");
-        // } else {
-        //     System.out.println("Possible solutions ");
-        //     solve(test,0,0);
-        //     test.show();
-        // }
+         if (!isValid(test)){
+             System.out.println("Entered puzzle is invalid");
+         } else {
+             System.out.println("Solution");
+             int[][] sol = new int[9][9];
+             solveAndGetFirstSolution(test,0,0, sol);
+             for(int i=0; i<9; i++){
+                 for(int j=0; j<9; j++){
+                     System.out.print(sol[i][j] + "  ");
+                 }
+                 System.out.println();
+             }
+             System.out.println();
+             System.out.println("---------------------");
+         }
     }
 }
