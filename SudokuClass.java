@@ -1,4 +1,5 @@
 import java.util.*;
+
 public class SudokuClass{
     int[][] sudoku = new int[9][9];
     
