@@ -86,7 +86,7 @@ public class Solver {
         return true;
     }
     
-    public static void solveAndDisplayAllSolutions(SudokuClass test, int i, int j) {
+    public static void solve(SudokuClass test, int i, int j) {
         if (i == 8 && j == 9) {
             test.show();
             return;
