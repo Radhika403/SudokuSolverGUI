@@ -1,16 +1,10 @@
 import javax.swing.*;
-// import javax.swing.event.AncestorListener;
 import javax.swing.border.Border;
-
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
-// import java.util.*;
-// import Solver.java;
 import java.awt.event.KeyEvent;
 
-public class GUI extends Solver implements ActionListener{
+public class GUI extends Solver {
 	
 	private JFrame frame;
 	private JButton b1;
@@ -26,6 +20,8 @@ public class GUI extends Solver implements ActionListener{
 
         b1 = new JButton("Solve");
         b1.addActionListener(e -> {
+            // Calling a function that takees the inputted value from the UI and inturn calls more
+            //  methods to solve and update the UI with solved values
 	    	GUIToSudoku(fields);
      	});
         
@@ -35,6 +31,7 @@ public class GUI extends Solver implements ActionListener{
         	for (int i=0; i<81; i++) {
         		fields[i].setText("");
         		fields[i].setBackground(Color.LIGHT_GRAY);
+                fields[i].setForeground(Color.BLACK);
         	}
      	});
         
@@ -78,9 +75,12 @@ public class GUI extends Solver implements ActionListener{
                 public void keyPressed(KeyEvent ke) {
                    char pressedKey = ke.getKeyChar();
                    if (pressedKey == 8) {
+                        //backspace
                 	   f.setText("");
                 	   f.setBackground(Color.LIGHT_GRAY);
                    } else if ((pressedKey >= '1' && pressedKey <= '9')) {
+                        // after setting text we set editable false as automatucally key listener would also add the value 
+                        // as soon as key is released which will lead to repeated value
                 	   f.setText(""+pressedKey);
                 	   f.setEditable(false);
                 	   f.setBackground(Color.GRAY);
@@ -89,6 +89,7 @@ public class GUI extends Solver implements ActionListener{
                    }
                 }
              });
+            //  finally we set editable back to true
             f.setEditable(true);
         }
         
@@ -140,19 +141,8 @@ public class GUI extends Solver implements ActionListener{
         
         int[][] solution = new int[9][9];
         solveAndGetFirstSolution(inputPuzzle, 0, 0, solution);
-        for(int i=0; i<9; i++){
-            for(int j=0; j<9; j++){
-                System.out.print(solution[i][j] + "  ");
-            }
-            System.out.println();
-        }
-        System.out.println();
-        System.out.println("748743874398");
         
         SudokuToGUI(solution, initialSudoku);
     }
-
-     @Override
-     public void actionPerformed(ActionEvent e) {}
 
 }
