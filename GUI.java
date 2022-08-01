@@ -136,13 +136,17 @@ public class GUI extends Solver {
             }
         }
         
-        int[][] initialSudoku = new int[9][9];
-        copySudoku(inputPuzzle.sudoku, initialSudoku);
+        if (isValid(inputPuzzle)){
+            int[][] initialSudoku = new int[9][9];
+            copySudoku(inputPuzzle.sudoku, initialSudoku);
+            
+            int[][] solution = new int[9][9];
+            solveAndGetFirstSolution(inputPuzzle, 0, 0, solution);
+            
+            SudokuToGUI(solution, initialSudoku);
+        }
+
         
-        int[][] solution = new int[9][9];
-        solveAndGetFirstSolution(inputPuzzle, 0, 0, solution);
-        
-        SudokuToGUI(solution, initialSudoku);
     }
 
 }
