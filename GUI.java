@@ -39,6 +39,7 @@ public class GUI extends Solver {
         b3.addActionListener(e -> {
         	// disposing the frame
     	   frame.dispose();
+           System.out.println("Exited");
     	});
         
         fields = getClearedFields();
