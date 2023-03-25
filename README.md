@@ -8,8 +8,8 @@ One you have entered the sudoku you need solved, just below you can see 3 button
 3. Exit
 
 
-`Clear` Grid button clears the entire sudoku.
+`Clear` button clears the entire sudoku. You can now give a fresh input puzzle.
 
-`Solve` button solves the sudoku and completed the filled sudoku by the user.
+`Solve` button solves the sudoku and completes the sudoku given by the user.
 
 `Exit` button closes the sudoku window.
